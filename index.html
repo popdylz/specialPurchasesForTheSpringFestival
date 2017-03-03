@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="format-detection" content="telephone=no">
+        <title>抢年货攻略</title>
+        <link rel="stylesheet" type="text/css" href="css/swiper.css">
+        <link rel="stylesheet" type="text/css" href="css/page.css">
+    </head>
+
+    <body>
+        <img src="img/share.jpg" style="display: none;">
+        <div class="homepage-box">
+            <img src="img/homepage.png" class="mainPic">
+            <div class="popup"></div>
+            <ul class="nav-box" id="navBox">
+                <li v-for="n in 13" class="nav-btn">{{ $index+1 }}</li>
+            </ul>
+        </div>
+        <div class="mainBox swiper-container">
+            <div class="swiper-wrapper" id="swiperBox">
+                <div class="swiper-slide" v-for="item in links" :data-index="$index+5">
+                    <img :src="'img/d'+($index+5)+'.png'" class="mainPic">
+                    <ul class="enter-box">
+                        <a :href="link.link" v-for="link in item" target="_blank">
+                            <li class="enter-pane"></li>
+                        </a>
+                    </ul>
+                </div>
+            </div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+            <div class="my-pagination"></div>
+            <div class="close-btn"></div>
+        </div>
+        <script type="text/javascript" src="js/jquery-2.2.1.min.js"></script>
+        <script type="text/javascript" src="js/swiper.jquery.min.js"></script>
+        <script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/data.js" type="text/javascript" charset="utf-8"></script>
+        <script type="text/javascript">
+            $(function() {
+                //console.log($('.swiper-container').height())
+                var mySwiper = new Swiper('.swiper-container', {
+                    autoplay: false, //自动切换时间间隔
+                    loop: false, //是否循环
+                    slidesPerView: 1, //一次移动几个
+                    initialSlide: 0, //开始位置
+                    speed: 300, //切换时速度
+                    pagination: '.my-pagination',
+                    paginationClickable: true,
+                    prevButton: '.swiper-button-prev',
+                    nextButton: '.swiper-button-next',
+                    paginationBulletRender: function(mySwiper, index, className) {
+                        switch(index) {
+                            case 0:name = '5';break;
+                            case 1:name = '6';break;
+                            case 2:name = '7';break;
+                            case 3:name = '8';break;
+                            case 4:name = '9';break;
+                            case 5:name = '10';break;
+                            case 6:name = '11';break;
+                            case 7:name = '12';break;
+                            case 8:name = '13';break;
+                            default:name = '';
+                        };
+                        return '<span class="' + className + '">' + name + '</span>';
+                    }
+                });
+                $('.nav-btn').click(function() {
+                    var idx = $(this).index();
+                    if(idx >= 4) {
+                        $('.swiper-pagination-bullet').eq(idx - 4).click();
+                        $('.popup').show();
+                    };
+                });
+                $('.mainPic').height($(window).height());
+
+                $('.my-pagination').click(function() {
+                    $('.mainBox').css('visibility', 'visible');
+                });
+
+                $('.close-btn').click(function() {
+                    $('.mainBox').css('visibility', 'hidden');
+                    $('.popup').hide();
+                });
+            });
+        </script>
+    </body>
+
+</html>
